@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginController } from './login.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from '../../users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from '../../users/users.service';
 import { ConfigModule } from '@nestjs/config';
@@ -15,7 +15,7 @@ import jwtConfig from './config/jwt.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([User]),
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
