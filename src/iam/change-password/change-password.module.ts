@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ChangePasswordController } from './change-password.controller';
 import { ChangePasswordService } from './change-password.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from '../../users/entities/users.entity';
+import { User } from '../../users/entities/user.entity';
 import { UsersService } from '../../users/users.service';
 import { MailerModule } from '../../shared/mailer/mailer.module';
 import { BcryptService } from '../../shared/hashing/bcrypt.service';
@@ -17,7 +17,7 @@ import jwtConfig from '../login/config/jwt.config';
 @Module({
   imports: [
     ConfigModule.forFeature(jwtConfig),
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([User]),
     MailerModule,
   ],
   controllers: [ChangePasswordController],

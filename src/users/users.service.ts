@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Users } from './entities/users.entity';
+import { User } from './entities/user.entity';
 import { IUsers } from './interfaces/users.interface';
 import { UserDto } from './dto/user.dto';
 import { UserProfileDto } from './dto/user-profile.dto';
@@ -17,16 +17,16 @@ import { HashingService } from '../shared/hashing/hashing.service';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(Users)
-    private readonly userRepository: Repository<Users>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
     private readonly hashingService: HashingService,
   ) {}
 
-  public async findAll(): Promise<Users[]> {
+  public async findAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
 
-  public async findByEmail(email: string): Promise<Users> {
+  public async findByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOneBy({
       email: email,
     });
@@ -38,7 +38,7 @@ export class UsersService {
     return user;
   }
 
-  public async findById(userId: string): Promise<Users> {
+  public async findById(userId: string): Promise<User> {
     const user = await this.userRepository.findOneBy({
       id: +userId,
     });
@@ -58,7 +58,7 @@ export class UsersService {
     }
   }
 
-  public async updateByEmail(email: string): Promise<Users> {
+  public async updateByEmail(email: string): Promise<User> {
     try {
       const user = await this.userRepository.findOneBy({ email: email });
       user.password = await this.hashingService.hash(
@@ -74,7 +74,7 @@ export class UsersService {
   public async updateByPassword(
     email: string,
     password: string,
-  ): Promise<Users> {
+  ): Promise<User> {
     try {
       const user = await this.userRepository.findOneBy({ email: email });
       user.password = await this.hashingService.hash(password);
@@ -88,7 +88,7 @@ export class UsersService {
   public async updateProfileUser(
     id: string,
     userProfileDto: UserProfileDto,
-  ): Promise<Users> {
+  ): Promise<User> {
     try {
       const user = await this.userRepository.findOneBy({ id: +id });
       user.name = userProfileDto.name;

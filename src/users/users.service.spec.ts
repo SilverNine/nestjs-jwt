@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { BcryptService } from '../shared/hashing/bcrypt.service';
 import { HashingService } from '../shared/hashing/hashing.service';
 import { UserDto } from './dto/user.dto';
-import { Users } from './entities/users.entity';
+import { Users } from './entities/user.entity';
 import { UsersService } from './users.service';
 
 const userArray = [
