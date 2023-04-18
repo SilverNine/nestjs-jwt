@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Users } from '../../users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 import { ForgotPasswordService } from './forgot-password.service';
 import { MailerService } from '../../shared/mailer/mailer.service';
 import { UtilsService } from '../../shared/utils/utils.service';
@@ -20,7 +20,7 @@ const user = {
 
 describe('ForgotPasswordService', () => {
   let service: ForgotPasswordService;
-  let repository: Repository<Users>;
+  let repository: Repository<User>;
   let mailerService: MailerService;
 
   beforeEach(async () => {
@@ -34,7 +34,7 @@ describe('ForgotPasswordService', () => {
           },
         },
         {
-          provide: getRepositoryToken(Users),
+          provide: getRepositoryToken(User),
           useValue: {
             findOneBy: jest.fn(() => oneUser),
             save: jest.fn(() => user),
@@ -64,7 +64,7 @@ describe('ForgotPasswordService', () => {
 
     service = module.get<ForgotPasswordService>(ForgotPasswordService);
     mailerService = module.get<MailerService>(MailerService);
-    repository = module.get<Repository<Users>>(getRepositoryToken(Users));
+    repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
   describe('forgot password user', () => {

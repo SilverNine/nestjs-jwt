@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../../users/users.service';
 import { RegisterService } from './register.service';
-import { Users } from '../../users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { HashingService } from '../../shared/hashing/hashing.service';
@@ -18,7 +18,7 @@ const registerUserDto: RegisterUserDto = {
 
 describe('RegisterService', () => {
   let service: RegisterService;
-  let repository: Repository<Users>;
+  let repository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -49,7 +49,7 @@ describe('RegisterService', () => {
           },
         },
         {
-          provide: getRepositoryToken(Users),
+          provide: getRepositoryToken(User),
           useValue: {
             save: jest.fn(),
           },
@@ -58,7 +58,7 @@ describe('RegisterService', () => {
     }).compile();
 
     service = module.get<RegisterService>(RegisterService);
-    repository = module.get<Repository<Users>>(getRepositoryToken(Users));
+    repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
   describe('Create user', () => {

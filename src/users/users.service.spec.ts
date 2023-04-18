@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { BcryptService } from '../shared/hashing/bcrypt.service';
 import { HashingService } from '../shared/hashing/hashing.service';
 import { UserDto } from './dto/user.dto';
-import { Users } from './entities/user.entity';
+import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
 const userArray = [
@@ -71,7 +71,7 @@ const updateUser = {
 
 describe('UsersService', () => {
   let service: UsersService;
-  let repository: Repository<Users>;
+  let repository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -82,7 +82,7 @@ describe('UsersService', () => {
           useClass: BcryptService,
         },
         {
-          provide: getRepositoryToken(Users),
+          provide: getRepositoryToken(User),
           useValue: {
             find: jest.fn().mockResolvedValue(userArray),
             findOne: jest.fn().mockResolvedValue(oneUser),
@@ -99,7 +99,7 @@ describe('UsersService', () => {
     }).compile();
 
     service = module.get<UsersService>(UsersService);
-    repository = module.get<Repository<Users>>(getRepositoryToken(Users));
+    repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
   it('should be defined', () => {

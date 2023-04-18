@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ChangePasswordService } from './change-password.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Users } from '../../users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from '../../users/users.service';
 import { MailerService } from '../../shared/mailer/mailer.service';
@@ -14,7 +14,7 @@ const changePasswordUser = {
 
 describe('ChangePasswordService', () => {
   let service: ChangePasswordService;
-  let repository: Repository<Users>;
+  let repository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -39,7 +39,7 @@ describe('ChangePasswordService', () => {
           },
         },
         {
-          provide: getRepositoryToken(Users),
+          provide: getRepositoryToken(User),
           useValue: {
             findOneBy: jest.fn(),
             updateByPassword: jest.fn(),
@@ -50,7 +50,7 @@ describe('ChangePasswordService', () => {
     }).compile();
 
     service = module.get<ChangePasswordService>(ChangePasswordService);
-    repository = module.get<Repository<Users>>(getRepositoryToken(Users));
+    repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
   describe('change password user', () => {

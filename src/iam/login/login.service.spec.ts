@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HashingService } from '../../shared/hashing/hashing.service';
 import { LoginService } from './login.service';
 import { UsersService } from '../../users/users.service';
-import { Users } from '../../users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { LoginDto } from './dto/login.dto';
 import { UnauthorizedException, HttpException } from '@nestjs/common';
@@ -77,7 +77,7 @@ describe('LoginService', () => {
           },
         },
         {
-          provide: getRepositoryToken(Users),
+          provide: getRepositoryToken(User),
           useValue: {
             findByEmail: jest.fn(),
             findOneBy: jest.fn().mockReturnValue(oneUser),
